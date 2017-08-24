@@ -22,9 +22,7 @@ void ofApp::draw() {
 
     poly.draw();
 
-    const auto & points = poly.getVertices();
-    for(size_t i = 0; i < points.size(); i++) {
-        const auto & point = points[i];
+    for(auto & point : poly.getVertices()) {
         ofDrawCircle(point.x, point.y, 4);
     }
 
