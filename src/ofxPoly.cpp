@@ -61,12 +61,12 @@ void ofxPolyGrow(ofPolyline & poly, const ofPolyline & polySource, float amount)
 
 //--------------------------------------------------------------
 void ofxPolyGrowAlongNormals(ofPolyline & poly, const ofPolyline & polySource, float normalLength) {
-    vector<float> thicknesses;
+    std::vector<float> thicknesses;
     thicknesses.insert(thicknesses.begin(), polySource.size(), normalLength);
     ofxPolyGrowAlongNormals(poly, polySource, thicknesses);
 }
 
-void ofxPolyGrowAlongNormals(ofPolyline & poly, const ofPolyline & polySource, const vector<float> & normalLengths) {
+void ofxPolyGrowAlongNormals(ofPolyline & poly, const ofPolyline & polySource, const std::vector<float> & normalLengths) {
 
     poly = polySource;
 
@@ -103,10 +103,10 @@ void ofxPolyToMesh(ofMesh & mesh, const ofPolyline & polySource, float normalLen
     ofxPolyToMesh(mesh, poly0, poly1);
 }
 
-void ofxPolyToMesh(ofMesh & mesh, const ofPolyline & polySource, const vector<float> & normalLengths) {
+void ofxPolyToMesh(ofMesh & mesh, const ofPolyline & polySource, const std::vector<float> & normalLengths) {
 
-    vector<float> normalLengths0;
-    vector<float> normalLengths1;
+    std::vector<float> normalLengths0;
+    std::vector<float> normalLengths1;
 
     for(size_t i=0; i<normalLengths.size(); i++) {
         float normalLength = normalLengths[i];
@@ -159,7 +159,7 @@ void ofxPolyDrawNormals(const ofPolyline & poly, float normalLength) {
 }
 
 //--------------------------------------------------------------
-void ofxPolySave(const ofPolyline & poly, string xmlPath) {
+void ofxPolySave(const ofPolyline & poly, std::string xmlPath) {
     ofXml xml;
     ofXml data = xml.appendChild("poly");
     data.appendChild("closed").set(poly.isClosed());
@@ -172,14 +172,14 @@ void ofxPolySave(const ofPolyline & poly, string xmlPath) {
 }
 
 //--------------------------------------------------------------
-bool ofxPolyLoad(ofPolyline & poly, string xmlPath) {
+bool ofxPolyLoad(ofPolyline & poly, std::string xmlPath) {
     ofXml xml;
     if(xml.load(xmlPath)) {
         auto data = xml.getChild("poly");
         bool bClosed = data.getChild("closed").getBoolValue();
-        
+
         poly.clear();
-        for(auto & p : data.getChildren("point")) {        
+        for(auto & p : data.getChildren("point")) {
             float x = p.getAttribute("x").getFloatValue();
             float y = p.getAttribute("y").getFloatValue();
             poly.addVertex(x, y);
@@ -190,5 +190,5 @@ bool ofxPolyLoad(ofPolyline & poly, string xmlPath) {
         return false;
     }
 }
-    
+
 
